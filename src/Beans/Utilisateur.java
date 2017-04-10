@@ -2,6 +2,7 @@ package Beans;
 
 import java.io.Serializable;
 
+
 import Beans.Utilisateur;
 
 public class Utilisateur implements Serializable, Comparable<Utilisateur> {

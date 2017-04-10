@@ -2,6 +2,7 @@ package Beans;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
+
 public class SeanceUV implements Serializable, Comparable<SeanceUV>{
 	
 	private int id;

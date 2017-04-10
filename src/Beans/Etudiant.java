@@ -6,7 +6,7 @@ import Beans.Etudiant;
 
 public class Etudiant implements  Serializable, Comparable<Etudiant> {
 	
-	private int id;
+	private String id;
 	private String nom;
 	private String prenom;
 	private String branche;
@@ -17,7 +17,7 @@ public class Etudiant implements  Serializable, Comparable<Etudiant> {
 		
 	}
 	
-	public Etudiant(int i, String n, String p, String b, String f,String m){
+	public Etudiant(String i, String n, String p, String b, String f,String m){
 		this.id = i;
 		this.nom = n;
 		this.prenom = p;
@@ -27,10 +27,10 @@ public class Etudiant implements  Serializable, Comparable<Etudiant> {
 	}
 	
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getNom() {

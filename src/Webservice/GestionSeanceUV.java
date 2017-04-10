@@ -12,6 +12,7 @@ import DAO.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 
+
 @Path("/SeanceUV")
 public class GestionSeanceUV {
 	
@@ -27,6 +28,21 @@ public class GestionSeanceUV {
 	       
 	    return Response.ok(Translator.toJson(a)).build();
 	}
+	
+	@POST
+	@Path("/UV/{codeUV}/jour/{jour}/horaireD/{hd}/horaireF/{hf}/salle/{salle}/type/{type}/responsable/{responsable}")
+	public Response post(@PathParam("codeUV") String codeUV,
+						@PathParam("jour") String jour,
+						@PathParam("hd") String hd,
+						@PathParam("hf") String hf,
+						@PathParam("salle") String salle,
+						@PathParam("type") String type,
+						@PathParam("responsable") String resp) {
+        
+		SeanceUV a = new SeanceUV(0,codeUV,jour, hd,hf,salle,type,resp);
+		int res = SeanceDAO.insert(a);
+        return Response.ok("Success ? : " +res).build();
+    }
 	
 	
 	@GET

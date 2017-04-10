@@ -221,7 +221,7 @@ public class UVDAO {
 			//Requete
 			String sql = "SELECT code,responsable,intitule FROM UV,EtuUV WHERE UV.code = EtuUV.codeUV AND EtuUV.idEtu = ?   ";
 			PreparedStatement ps = cnx.prepareStatement(sql);
-			ps.setInt(1, u.getId());
+			ps.setString(1, u.getId());
 			
 			
 			//Execution et traitement de la réponse

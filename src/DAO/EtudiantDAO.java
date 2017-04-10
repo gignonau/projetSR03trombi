@@ -23,14 +23,15 @@ public class EtudiantDAO {
 			cnx = ConnexionBDD.getInstance().getCnx();
 			
 			//Requete
-			String sql = "INSERT INTO Etudiant(nom,prenom,branche,mail) " +
-					"VALUES(?,?,?,?,?)";
+			String sql = "INSERT INTO Etudiant(login,nom,prenom,branche,filiere,mail) " +
+					"VALUES(?,?,?,?,?,?)";
 			PreparedStatement ps = cnx.prepareStatement(sql);
-			ps.setString(1, u.getNom());
-			ps.setString(2, u.getPrenom());
-			ps.setString(3, u.getBranche());
-			ps.setString(4, u.getFiliere());
-			ps.setString(5, u.getMail());
+			ps.setString(1, u.getId());
+			ps.setString(2, u.getNom());
+			ps.setString(3, u.getPrenom());
+			ps.setString(4, u.getBranche());
+			ps.setString(5, u.getFiliere());
+			ps.setString(6, u.getMail());
 			
 			
 			
@@ -55,14 +56,14 @@ public class EtudiantDAO {
 			cnx = ConnexionBDD.getInstance().getCnx();
 			
 			//Requete
-			String sql = "UPDATE Etudiant SET nom=?,prenom=?,branche=?,filiere=?,mail=? WHERE id=?";
+			String sql = "UPDATE Etudiant SET nom=?,prenom=?,branche=?,filiere=?,mail=? WHERE login=?";
 			PreparedStatement ps = cnx.prepareStatement(sql);
 			ps.setString(1, u.getNom());
 			ps.setString(2, u.getPrenom());
 			ps.setString(3, u.getBranche());
 			ps.setString(4, u.getFiliere());
 			ps.setString(5, u.getMail());
-			ps.setInt(6, u.getId());
+			ps.setString(6, u.getId());
 			
 			//Execution et traitement de la réponse
 			res = ps.executeUpdate();
@@ -75,7 +76,7 @@ public class EtudiantDAO {
 		return res;
 	}
 	
-	public static int delete(int id) {
+	public static int delete(String id) {
 		int res = 0,res1 =0, res2 = 0;
 		Connection cnx=null;
 		try {
@@ -86,7 +87,7 @@ public class EtudiantDAO {
 			//Requete
 			String sql1 = "DELETE FROM EtuUV WHERE idEtu=?";
 			PreparedStatement ps1 = cnx.prepareStatement(sql1);
-			ps1.setInt(1,id);
+			ps1.setString(1,id);
 			
 			//Execution et traitement de la réponse
 			res1 = ps1.executeUpdate();
@@ -95,16 +96,16 @@ public class EtudiantDAO {
 			//Requete
 			String sql2 = "DELETE FROM EtuSeance WHERE idEtu=?";
 			PreparedStatement ps2 = cnx.prepareStatement(sql2);
-			ps2.setInt(1,id);
+			ps2.setString(1,id);
 			
 			//Execution et traitement de la réponse
 			res2 = ps2.executeUpdate();
 			
 			
 			//Requete
-			String sql = "DELETE FROM Etudiant WHERE id=?";
+			String sql = "DELETE FROM Etudiant WHERE login=?";
 			PreparedStatement ps = cnx.prepareStatement(sql);
-			ps.setInt(1,id);
+			ps.setString(1,id);
 			
 			//Execution et traitement de la réponse
 			res = ps.executeUpdate();
@@ -137,14 +138,14 @@ public class EtudiantDAO {
 
 			
 			//Requete
-			String sql = "SELECT id,nom,prenom,branche,filiere,mail FROM Etudiant";
+			String sql = "SELECT login,nom,prenom,branche,filiere,mail FROM Etudiant";
 			PreparedStatement ps = cnx.prepareStatement(sql);
 			
 			//Execution et traitement de la réponse
 			ResultSet res = ps.executeQuery();
 			
 			while(res.next()){
-				lu.add(new Etudiant(res.getInt("id"),
+				lu.add(new Etudiant(res.getString("login"),
 						res.getString("nom"),
 						res.getString("prenom"),
 						res.getString("branche"),
@@ -163,7 +164,7 @@ public class EtudiantDAO {
 		return lu;
 	}
 	
-	public static Etudiant find(int id) {
+	public static Etudiant find(String id) {
 		/*
 		 * List<beans.Utilisateur> lu = new ArrayList<Utilisateur>(); lu.add(new
 		 * Utilisateur(1,"nom1","tel1","username1","pwd1")); lu.add(new
@@ -180,16 +181,16 @@ public class EtudiantDAO {
 
 		
 			//Requete
-			String sql = "SELECT id,nom,prenom,branche,filiere,mail FROM Etudiant WHERE id=?";
+			String sql = "SELECT login,nom,prenom,branche,filiere,mail FROM Etudiant WHERE login=?";
 			PreparedStatement ps = cnx.prepareStatement(sql);
-			ps.setInt(1, id);
+			ps.setString(1, id);
 			
 			
 			//Execution et traitement de la réponse
 			ResultSet res = ps.executeQuery();
 			
 			while(res.next()){
-				u = new Etudiant(res.getInt("id"),
+				u = new Etudiant(res.getString("login"),
 						res.getString("nom"),
 						res.getString("prenom"),
 						res.getString("branche"),
@@ -210,7 +211,7 @@ public class EtudiantDAO {
 		return u;
 	}
 	
-	public static List<Etudiant> find(String exp) {
+	public static List<Etudiant> findWith(String exp) {
 		/*
 		 * List<beans.Utilisateur> lu = new ArrayList<Utilisateur>(); lu.add(new
 		 * Utilisateur(1,"nom1","tel1","username1","pwd1")); lu.add(new
@@ -226,7 +227,7 @@ public class EtudiantDAO {
 
 		
 			//Requete
-			String sql = "SELECT id,nom,prenom,branche,filiere,mail FROM Etudiant WHERE nom LIKE '%"+exp+"%'";
+			String sql = "SELECT login,nom,prenom,branche,filiere,mail FROM Etudiant WHERE nom LIKE '%"+exp+"%'";
 			PreparedStatement ps = cnx.prepareStatement(sql);
 			//ps.setString(1, exp);
 			
@@ -235,7 +236,7 @@ public class EtudiantDAO {
 			ResultSet res = ps.executeQuery();
 			
 			while(res.next()){
-				u.add(new Etudiant(res.getInt("id"),
+				u.add(new Etudiant(res.getString("login"),
 						res.getString("nom"),
 						res.getString("prenom"),
 						res.getString("branche"),
@@ -272,7 +273,7 @@ public class EtudiantDAO {
 
 		
 			//Requete
-			String sql = "SELECT id,nom,prenom,branche,filiere,mail FROM Etudiant,EtuUV WHERE Etudiant.id =EtuUV idEtu  AND EtuUV.codeUV = ? ";
+			String sql = "SELECT login,nom,prenom,branche,filiere,mail FROM Etudiant,EtuUV WHERE Etudiant.login =EtuUV.idEtu  AND EtuUV.codeUV = ? ";
 			PreparedStatement ps = cnx.prepareStatement(sql);
 			ps.setString(1, u.getUV());
 			
@@ -281,7 +282,7 @@ public class EtudiantDAO {
 			ResultSet res = ps.executeQuery();
 			
 			while(res.next()){
-				lu.add(new Etudiant(res.getInt("id"),
+				lu.add(new Etudiant(res.getString("login"),
 						res.getString("nom"),
 						res.getString("prenom"),
 						res.getString("branche"),
@@ -318,7 +319,7 @@ public class EtudiantDAO {
 
 		
 			//Requete
-			String sql = "SELECT id,nom,prenom,branche,filiere,mail FROM Etudiant,EtuSeance WHERE Etudiant.id =EtuSeance.idEtu  AND EtuSeance.idSeance = ? ";
+			String sql = "SELECT login,nom,prenom,branche,filiere,mail FROM Etudiant,EtuSeance WHERE Etudiant.login =EtuSeance.idEtu  AND EtuSeance.idSeance = ? ";
 			PreparedStatement ps = cnx.prepareStatement(sql);
 			ps.setInt(1, u.getId());
 			
@@ -327,7 +328,7 @@ public class EtudiantDAO {
 			ResultSet res = ps.executeQuery();
 			
 			while(res.next()){
-				lu.add(new Etudiant(res.getInt("id"),
+				lu.add(new Etudiant(res.getString("login"),
 						res.getString("nom"),
 						res.getString("prenom"),
 						res.getString("branche"),

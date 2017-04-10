@@ -226,7 +226,7 @@ public class SeanceDAO {
 			//Requete
 			String sql = "SELECT id,codeUV,jour, horaireD,horaireF,salle,type,responsable FROM Seance,EtuSeance WHERE EtuSeance.idEtu =?  AND EtuSeance.idSeance = Seance.id ";
 			PreparedStatement ps = cnx.prepareStatement(sql);
-			ps.setInt(1, et.getId());
+			ps.setString(1, et.getId());
 			
 			
 			//Execution et traitement de la réponse

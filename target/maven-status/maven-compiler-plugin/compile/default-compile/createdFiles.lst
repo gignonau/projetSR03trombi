@@ -1,0 +1,8 @@
+DAO/ConnexionBDD.class
+Beans/SeanceUV.class
+Controllers/User.class
+Beans/UV.class
+Beans/Etudiant.class
+DAO/EtudiantDAO.class
+Webservice/User.class
+Beans/Utilisateur.class

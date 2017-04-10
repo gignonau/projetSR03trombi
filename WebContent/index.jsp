@@ -9,8 +9,11 @@
 <body>
 <h1> Bienvenue dans le meilleur trombinoscope étudiants </h1>
 
+
+Nombre de visiteurs : ${applicationScope.nbUsers}
+
 <br />
-	<a href="FirstServlet">Une première servlet (conf annotation)</a>
+	<a href="GestionEtudiant">Une première servlet</a>
 <br />
 
 </body>
